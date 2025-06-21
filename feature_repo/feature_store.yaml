@@ -1,0 +1,7 @@
+project: iris with feast
+registry: registry.db
+provider: local
+
+offline_store:
+    type: sqlite
+    path: data/iris.db
