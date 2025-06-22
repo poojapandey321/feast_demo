@@ -4,3 +4,4 @@ __pycache__/
 feast_env/
 data/*.db
 data/iris_feast.csv
+.ipynb_checkpoints/
