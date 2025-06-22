@@ -8,7 +8,7 @@ from feast.types import Float32
 import warnings
 warnings.filterwarnings("ignore", message="Protobuf gencode version.*")
 
-# Step 1: Prepare CSV with timestamp and flower_id
+# Prepare CSV with timestamp and flower_id
 def prepare_iris_csv():
     input_path = os.path.join("..", "data", "iris.csv")
     output_path = os.path.join("..", "data", "iris_feast.csv")
@@ -23,12 +23,12 @@ def prepare_iris_csv():
 
     # Save to new file
     df.to_csv(output_path, index=False)
-    print("✅ iris_feast.csv generated.")
+    print("iris_feast.csv generated.")
 
 # Run preparation
 prepare_iris_csv()
 
-# Step 2: Define Feast components
+# Define Feast components
 # Entity
 flower = Entity(name="flower_id", join_keys=["flower_id"], value_type=ValueType.INT64)
 
