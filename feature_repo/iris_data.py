@@ -1,10 +1,9 @@
 import pandas as pd
 from datetime import datetime
-from feast import Entity, FeatureView, Field, FileSource
-from feast import ValueType
 from datetime import timedelta
 import os
-
+from feast import Entity, FeatureView, Field, FileSource, ValueType
+from feast.types import Float32 
 # Step 1: Prepare CSV with timestamp and flower_id
 def prepare_iris_csv():
     input_path = os.path.join("..", "data", "iris.csv")
