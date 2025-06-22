@@ -1,0 +1,6 @@
+# Ignore envs, caches, Feast DBs
+__pycache__/
+*.py[cod]
+feast_env/
+data/*.db
+data/iris_feast.csv

@@ -1,55 +1,34 @@
 import pandas as pd
-from datetime import datetime
 from datetime import timedelta
-import os
 from feast import Entity, FeatureView, Field, FileSource, ValueType
-from feast.types import Float32 
 
-import warnings
-warnings.filterwarnings("ignore", message="Protobuf gencode version.*")
-
-# Prepare CSV with timestamp and flower_id
+# Create flower_id and timestamp
 def prepare_iris_csv():
-    input_path = os.path.join("..", "data", "iris.csv")
-    output_path = os.path.join("..", "data", "iris_feast.csv")
-
-    df = pd.read_csv(input_path)
-
-    # Add unique flower_id
+    df = pd.read_csv("../data/iris.csv")
     df.insert(0, "flower_id", range(1, len(df) + 1))
-
-    # Add event_timestamp (same for all rows here)
     df["event_timestamp"] = pd.to_datetime("2025-06-01T10:00:00")
+    df.to_csv("../data/iris_feast.csv", index=False)
+    print("iris_feast.csv created.")
 
-    # Save to new file
-    df.to_csv(output_path, index=False)
-    print("iris_feast.csv generated.")
-
-# Run preparation
 prepare_iris_csv()
 
-# Define Feast components
-# Entity
+# Define Feast entity, source, and feature view
 flower = Entity(name="flower_id", join_keys=["flower_id"], value_type=ValueType.INT64)
 
-
-# Source
 iris_source = FileSource(
     path="../data/iris_feast.csv",
     event_timestamp_column="event_timestamp",
 )
 
-# Feature View
 iris_fv = FeatureView(
     name="iris_features",
     entities=[flower],
     ttl=timedelta(days=1),
     schema=[
-        Field(name="sepal_length", dtype=Float32),
-        Field(name="sepal_width", dtype=Float32),
-        Field(name="petal_length", dtype=Float32),
-        Field(name="petal_width", dtype=Float32),
+        Field(name="sepal_length", dtype=ValueType.FLOAT),
+        Field(name="sepal_width", dtype=ValueType.FLOAT),
+        Field(name="petal_length", dtype=ValueType.FLOAT),
+        Field(name="petal_width", dtype=ValueType.FLOAT),
     ],
     source=iris_source,
 )
-
