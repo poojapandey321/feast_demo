@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
 from feast import Entity, FeatureView, Field, FileSource
-from feast.types import Float32
+from feast import ValueType
 from datetime import timedelta
 import os
 
@@ -27,7 +27,8 @@ prepare_iris_csv()
 
 # Step 2: Define Feast components
 # Entity
-flower = Entity(name="flower_id", join_keys=["flower_id"])
+flower = Entity(name="flower_id", join_keys=["flower_id"], value_type=ValueType.INT64)
+
 
 # Source
 iris_source = FileSource(
