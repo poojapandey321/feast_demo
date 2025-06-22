@@ -1,4 +1,3 @@
-
 project: iris_project
 registry: data/registry.db
 provider: local

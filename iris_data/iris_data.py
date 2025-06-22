@@ -1,10 +1,9 @@
 import pandas as pd
 from datetime import timedelta
 from feast.types import Float32
-
 from feast import Entity, FeatureView, Field, FileSource, ValueType
 
-# Create flower_id and timestamp
+# STEP 1: Convert iris.csv to iris_feast.csv (with flower_id + event_timestamp)
 def prepare_iris_csv():
     df = pd.read_csv("../data/iris.csv")
     df.insert(0, "flower_id", range(1, len(df) + 1))
@@ -14,14 +13,16 @@ def prepare_iris_csv():
 
 prepare_iris_csv()
 
-# Define Feast entity, source, and feature view
+# STEP 2: Define Entity
 flower = Entity(name="flower_id", join_keys=["flower_id"], value_type=ValueType.INT64)
 
+# STEP 3: Define File Source
 iris_source = FileSource(
     path="../data/iris_feast.csv",
     event_timestamp_column="event_timestamp",
 )
 
+# STEP 4: Define Feature View
 iris_fv = FeatureView(
     name="iris_features",
     entities=[flower],
