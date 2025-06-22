@@ -4,6 +4,10 @@ from datetime import timedelta
 import os
 from feast import Entity, FeatureView, Field, FileSource, ValueType
 from feast.types import Float32 
+
+import warnings
+warnings.filterwarnings("ignore", message="Protobuf gencode version.*")
+
 # Step 1: Prepare CSV with timestamp and flower_id
 def prepare_iris_csv():
     input_path = os.path.join("..", "data", "iris.csv")
