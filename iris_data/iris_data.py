@@ -1,5 +1,7 @@
 import pandas as pd
 from datetime import timedelta
+from feast.types import Float32
+
 from feast import Entity, FeatureView, Field, FileSource, ValueType
 
 # Create flower_id and timestamp
@@ -25,10 +27,10 @@ iris_fv = FeatureView(
     entities=[flower],
     ttl=timedelta(days=1),
     schema=[
-        Field(name="sepal_length", dtype=ValueType.FLOAT),
-        Field(name="sepal_width", dtype=ValueType.FLOAT),
-        Field(name="petal_length", dtype=ValueType.FLOAT),
-        Field(name="petal_width", dtype=ValueType.FLOAT),
+        Field(name="sepal_length", dtype=Float32),
+        Field(name="sepal_width", dtype=Float32),
+        Field(name="petal_length", dtype=Float32),
+        Field(name="petal_width", dtype=Float32),
     ],
     source=iris_source,
 )
